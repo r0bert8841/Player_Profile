@@ -257,10 +257,18 @@ mean(svm.pred==as.factor(test.change))
 #0.7563997
 
 
-tune.out=tune(svm ,as.factor(change) ~ age+prev_season_goals_per_game+max_season_goals_per_game+min_season_goals_per_game+avg_season_goals_per_game,data=train,kernel ="linear", ranges =list(cost=c(0.0001,0.001 , 0.01, 0.1, 1,5,10,100) )) 
+tune.out=tune(svm ,as.factor(change) ~ age+prev_season_goals_per_game+max_season_goals_per_game+min_season_goals_per_game+avg_season_goals_per_game,data=train,kernel ="radial", ranges =list(cost=c(0.0001,0.001 , 0.01, 0.1, 1,5,10,100,1000,10000) )) 
 summary(tune.out) 
 
 svm.pred <- predict(tune.out$best.model,test.X)
 table(svm.pred,as.factor(test.change))
 mean(svm.pred==as.factor(test.change))
-#0.7563997
+#0.8096614
+
+tune.out=tune(svm ,as.factor(change) ~ age+prev_season_goals_per_game+max_season_goals_per_game+min_season_goals_per_game+avg_season_goals_per_game,data=train,kernel ="polynomial", ranges =list(cost=c(0.0001,0.001 , 0.01, 0.1, 1,5,10,100) )) 
+summary(tune.out) 
+
+svm.pred <- predict(tune.out$best.model,test.X)
+table(svm.pred,as.factor(test.change))
+mean(svm.pred==as.factor(test.change))
+#0.7287366
